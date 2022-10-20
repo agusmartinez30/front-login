@@ -1,0 +1,100 @@
+<main class="container-custom">
+ <!--  <div *ngIf="this.error" class="container-error">
+    <h2>Usuario o contraseña incorrectos...</h2>
+  </div> -->
+
+  
+  <div *ngIf="this.error" class="alert alert-danger w-100" role="alert">
+    Usuario o contraseña incorrectos.
+  </div>
+  <section class="container-login">
+    <h2 class="fs-4 fw-normal">Inicio de sesión</h2>
+    <form [formGroup]="formLogin" (submit)="onLogin()" class="w-100 py-3  border-bottom">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Usuario</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Ingrese su usuario"
+          formControlName="usuario"
+        />
+        <div >
+
+
+          <div class="toast-container position-fixed bottom-0 end-0 p-3"   >
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                Hello, world! This is a toast message.
+              </div>
+            </div>
+          </div>
+
+
+          <p
+          *ngIf=" formLogin.get('usuario')?.touched && formLogin.get('usuario')?.errors?.['required'] "
+          class="text-danger py-2"
+        >
+          este campo es obligatorio
+        </p>
+        <p
+          *ngIf=" formLogin.get('usuario')?.touched && formLogin.get('usuario')?.errors?.['minlength'] "
+          class="text-danger py-2"
+        >
+          El usuario debe ser mayor de 6 caracteres
+        </p>
+        </div>
+       
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          placeholder="Ingrese su contraseña"
+          formControlName="clave"
+        />
+        <p
+          *ngIf=" formLogin.get('clave')?.touched && formLogin.get('clave')?.errors?.['required'] "
+          class="text-danger py-2"
+        >
+          este campo es obligatorio
+        </p>
+        <p
+          *ngIf=" formLogin.get('clave')?.touched && formLogin.get('clave')?.errors?.['minlength'] "
+          class="text-danger py-2"
+        >
+          La contraseña debe ser mayor de 6 caracteres
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary  w-100"
+        [disabled]="formLogin.invalid"
+        id="liveToastBtn"
+      >
+        Ingresar
+      </button>
+    </form>
+    <nav class="container-lost-password py-3"  >
+      <a routerLink="/accounts/reset-password" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+    </nav>
+  </section>
+</main>
+
+
+<script>
+  
+    $(document).ready(function(){
+      $('.toast').toast('show');
+    })
+</script>
