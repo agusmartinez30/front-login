@@ -1,0 +1,24 @@
+<main class="container-custom">
+  <form class="container-login gap-3" [formGroup]="formLogin">
+    <div class="container-input">
+      <label class="form-label">Nueva contraseña</label>
+      <input
+        type="password"
+        placeholder="Nueva contraseña"
+        formControlName="contrasenia"
+        class="form-control w-100"
+      />
+    </div>
+
+    <div class="container-input">
+      <label class="form-label">Confirmar contraseña</label>
+      <input
+        type="password"
+        placeholder="Nueva contraseña"
+        formControlName="contrasenia"
+        class="form-control w-100"
+      />
+    </div>
+    <button type="submit"   class="btn btn-primary w-100" (click)="ChangePassword()">Cambiar contraseña</button>
+  </form>
+</main>

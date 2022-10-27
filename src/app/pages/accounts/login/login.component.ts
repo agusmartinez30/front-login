@@ -10,6 +10,7 @@ import { LoginUsuario } from 'src/app/models/login-usuario';
 import { AuthService } from 'src/app/service/auth.service';
 import { TokenService } from 'src/app/service/token.service';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  title = 'Login';
+
   public formLogin!: FormGroup;
 
   error = false;
-
 
   constructor(
     private authService: AuthService,
@@ -31,21 +33,13 @@ export class LoginComponent {
   ) {}
 
   ngOnInit(): void {
-
-
-
-  this.formLogin = this.fb.group({
-      usuario: ['', [Validators.required,  Validators.minLength(6)]],
+    this.formLogin = this.fb.group({
+      usuario: ['', [Validators.required, Validators.minLength(6)]],
       clave: ['', [Validators.required, Validators.minLength(6)]],
     });
- 
-
   }
-  
-
 
   onLogin(): void {
-
     // tomar los valores de los inputs
     const usuarioData = new LoginUsuario(
       this.formLogin.get('usuario')?.value,
@@ -53,27 +47,80 @@ export class LoginComponent {
     );
 
     this.authService.login(usuarioData).subscribe((data) => {
+      if (!data) {
+        /* alert('ups....') */
 
-      if(!data){
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          background: "#F25D5D",
+          color: "#FFF",
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
         
-      }else{
+        Toast.fire({
+          icon: 'warning',
+          title: 'Usuario o contraseña incorrectos',
+          iconColor: '#FFF'
+        })
+
+
+       /*  Swal.fire({
+          title: 'Datos incorrectos',
+          text: 'Usuario o contraseña incorrectos.',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        });  */
        
-        console.log(data.mensaje);
-        this.tokenService.setToken(data.mensaje);
-        this.router.navigate(['/admin']);
+      } else {
+
+        localStorage.setItem('name', this.formLogin.get('usuario')?.value)
+        /* alert('yes todo ok...') */
+      /*   Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: `Bienvenido ${ this.formLogin.get('usuario')?.value} ` ,
+          showConfirmButton: false,
+          timer: 1500
+        }) */
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          background: '#75CB8D',
+          color: '#FFF',
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: `Autenticación correcta` ,
+          iconColor: '#fff'
+        })
+
+        setTimeout(()=>{
+          console.log(data.mensaje);
+          this.tokenService.setToken(data.mensaje);
+          this.router.navigate(['/dashboard']);
+        }, 1900)
+
+
+       
       }
     });
 
-    if (this.error) {
-      console.log('logged..');
-    } else {
-      console.log('incorecto..');
-      this.error = true
-      
-    }
+   
 
     console.log(this.formLogin.get('usuario')?.value);
     console.log(this.formLogin.get('clave')?.value);
-  
   }
 }

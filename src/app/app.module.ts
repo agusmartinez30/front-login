@@ -3,10 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { AdminComponent } from './components/admin/admin.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+
+
 
 
 
@@ -21,25 +19,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 // angular material
-import { MaterialModule } from './material.module';
 import { ResetPasswordComponent } from './pages/accounts/reset-password/reset-password.component';
 import { LoginComponent } from './pages/accounts/login/login.component';
-import { ErrorTailorModule } from '@ngneat/error-tailor';
 import { ToastrModule } from 'ngx-toastr';
-import { ClientesPageComponent } from './pages/dashboard/clientes-page/clientes-page.component';
-import { ReservasComponent } from './components/reservas/reservas.component';
+import { DefaultModule } from './layouts/default/default.module';
+import { ChangePassComponent } from './modules/cuenta/cambiar-contrasenia/cambiar-contra.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
-    AdminComponent,
     ResetPasswordComponent,
-    HeaderComponent,
-    SidebarComponent,
-    ClientesPageComponent,
-    ReservasComponent
+    ChangePassComponent
+  
   ],
   imports: [
     BrowserModule,
@@ -49,7 +43,7 @@ import { ReservasComponent } from './components/reservas/reservas.component';
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    MaterialModule,
+    DefaultModule,
     /* ErrorTailorModule.forRoot({
       errors: {
         useValue: {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable } from 'rxjs';
+import { ChangePasswordDto } from '../models/change-password';
 import { LoginUsuario } from '../models/login-usuario';
 import { ReqResetPassword } from '../models/req-reset-password';
 
@@ -22,8 +23,10 @@ export class AuthService {
 
     }
 
-    findCorreo(dto: ReqResetPassword): Observable<any>{
-      return this.http.post(this.authUrl + 'solicitar-restablecer-contrasenia', dto)
+
+
+    changePassword(dto: ChangePasswordDto): Observable<any>{
+      return this.http.put(this.authUrl + 'restablecer-contrasenia', dto)
     }
 
     reqResetPassword(dto: ReqResetPassword): Observable<any>{

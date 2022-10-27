@@ -26,4 +26,5 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['accounts/login'])
   }
 
+  username = localStorage.getItem('name')
 }
